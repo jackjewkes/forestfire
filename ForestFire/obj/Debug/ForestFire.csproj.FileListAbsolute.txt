@@ -1,0 +1,7 @@
+C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\bin\Debug\ForestFire.exe.config
+C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\bin\Debug\ForestFire.exe
+C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\bin\Debug\ForestFire.pdb
+C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.csproj.AssemblyReference.cache
+C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.csproj.CoreCompileInputs.cache
+C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.exe
+C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.pdb
