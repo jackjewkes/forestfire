@@ -1,3 +1,9 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="ForestFire/forest_grid_1.txt" />
+    <File Path="ForestFire/forest_grid_2.txt" />
+    <File Path="ForestFire/forest_grid_3.txt" />
+    <File Path="ForestFire/forest_grid_bad.txt" />
+  </Folder>
   <Project Path="ForestFire/ForestFire.csproj" Id="2a05d083-b514-404f-9245-222eaf6105ff" />
 </Solution>

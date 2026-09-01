@@ -5,3 +5,14 @@ C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.csp
 C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.csproj.CoreCompileInputs.cache
 C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.exe
 C:\Users\Jack\Desktop\Forest fire\ForestFire\ForestFire\obj\Debug\ForestFire.pdb
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\bin\Debug\ForestFire.exe.config
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\bin\Debug\ForestFire.exe
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\bin\Debug\ForestFire.pdb
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\obj\Debug\ForestFire.csproj.AssemblyReference.cache
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\obj\Debug\ForestFire.csproj.CoreCompileInputs.cache
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\obj\Debug\ForestFire.exe
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\obj\Debug\ForestFire.pdb
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\bin\Debug\forest_grid_1.txt
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\bin\Debug\forest_grid_2.txt
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\bin\Debug\forest_grid_3.txt
+C:\Users\jack_\Documents\GitHub\forestfire\ForestFire\bin\Debug\forest_grid_bad.txt
