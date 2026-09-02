@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ForestFire
@@ -22,28 +23,79 @@ namespace ForestFire
 
         static void Main(string[] args)
         {
-            var (width, height, grid) = ReadFile();
+            Console.WriteLine("Welcome to the Fire Spread Simulation!");
+            Console.WriteLine("You are an environmental scientist tracking a wildfire spreading through a forest. Your mission is to simulate the spread of fire across a grid-based map of the forest and find strategies to slow or stop the blaze.");
+            Console.Write("Press 1 to load a default 4x4 forest grid, press 2 to load a forest grid from file: ");
+            string answer = Console.ReadLine();
+            while (answer != "1" && answer != "2")
+            {
+                Console.Write("Incorrect input, press 1 to load a default 4x4 forest grid, press 2 to load a forest grid from file: ");
+                answer = Console.ReadLine();
+            }
+            var (width, height, grid) = ReadFile(isDefault: answer == "1");
+            Console.WriteLine("Thank you, we are loading your forest grid now. Press enter to display the grid");
+            Console.ReadLine();
+            DrawGrid(grid, width, height);
+            Console.WriteLine("It's time to start the fire simulation.");
+            int fireStartingX, fireStartingY;
+            while (true)
+            {
+                Console.Write("Please enter the x co-ordinate of the fire: ");
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out fireStartingX) && fireStartingX >= 0 && fireStartingX <= width - 1)
+                    {
+                        break;
+                    }
+                    Console.Write("The x coordinate must be an integer within the width of the forest. Please retry: ");
+                }
+                Console.Write("Please enter the y co-ordinate of the fire: ");
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out fireStartingY) && fireStartingY >= 0 && fireStartingY <= height - 1)
+                    {
+                        break;
+                    }
+                    Console.Write("The y coordinate must be an integer within the height of the forest. Please retry: ");
+                }
+                if (grid[fireStartingX,fireStartingY] == Cell.Tree)
+                {
+                    grid[fireStartingX, fireStartingY] = Cell.Fire;
+                    break;
+                }
+                Console.WriteLine("Whoops, you can only start the fire simulation in a cell that contains a tree. Please try again.");
+            }
+            Console.WriteLine("Thank you, we are loading your forest grid now. Press enter to display the grid");
+            Console.ReadLine();
             DrawGrid(grid, width, height);
         }
 
-        static (int width, int height, Cell[,] grid) ReadFile()
+        static (int width, int height, Cell[,] grid) ReadFile(bool isDefault)
         {
             int width, height;
             string path;
             while (true)
             {
-                Console.Write("Please enter the name of the forest file: ");
-                path = Console.ReadLine();
+                if (isDefault)
+                {
+                    path = "forest_grid_1.txt";
+                }
+                else
+                {
+                    Console.Write("Please enter the name of the forest file: ");
+                    path = Console.ReadLine();
+                }
                 try
                 {
                     using (StreamReader sr = new StreamReader(path))
                     {
                         string line = sr.ReadLine();
-                        if (!int.TryParse(line[0].ToString(), out width))
+                        string[] splat = line.Split(' ');
+                        if (!int.TryParse(splat[0], out width))
                         {
                             throw new FormatException("Incorrectly formatted forest width");
                         }
-                        if (!int.TryParse(line[2].ToString(), out height))
+                        if (!int.TryParse(splat[1], out height))
                         {
                             throw new FormatException("Incorrectly formatted forest height");
                         }
@@ -51,7 +103,7 @@ namespace ForestFire
                         int y = height - 1;
                         while ((line = sr.ReadLine()) != null)
                         {
-                            string[] splat = line.Split(' ');
+                            splat = line.Split(' ');
                             if (splat.Length == width)
                             {
                                 for (int x = 0; x < width; x++)
@@ -72,7 +124,7 @@ namespace ForestFire
                             }
                             else
                             {
-                                throw new FormatException();
+                                throw new FormatException("Unknown error");
                             }
                             y--;
                         }
@@ -84,7 +136,6 @@ namespace ForestFire
                     Console.WriteLine("The file could not be read:");
                     Console.WriteLine(e.Message);
                 }
-
             }
         }
 
