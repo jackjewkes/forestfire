@@ -18,6 +18,7 @@ namespace ForestFire
             Empty,
             Tree,
             Fire,
+            NewFire,
             Water
         }
 
@@ -32,10 +33,10 @@ namespace ForestFire
                 Console.Write("Incorrect input, press 1 to load a default 4x4 forest grid, press 2 to load a forest grid from file: ");
                 answer = Console.ReadLine();
             }
-            var (width, height, grid) = ReadFile(isDefault: answer == "1");
+            Cell[,] grid = ReadFile(isDefault: answer == "1");
             Console.WriteLine("Thank you, we are loading your forest grid now. Press enter to display the grid");
             Console.ReadLine();
-            DrawGrid(grid, width, height);
+            DrawGrid(grid);
             Console.WriteLine("It's time to start the fire simulation.");
             int fireStartingX, fireStartingY;
             while (true)
@@ -43,7 +44,7 @@ namespace ForestFire
                 Console.Write("Please enter the x co-ordinate of the fire: ");
                 while (true)
                 {
-                    if (int.TryParse(Console.ReadLine(), out fireStartingX) && fireStartingX >= 0 && fireStartingX <= width - 1)
+                    if (int.TryParse(Console.ReadLine(), out fireStartingX) && fireStartingX >= 0 && fireStartingX <= grid[].getlength(0) - 1)
                     {
                         break;
                     }
@@ -52,7 +53,7 @@ namespace ForestFire
                 Console.Write("Please enter the y co-ordinate of the fire: ");
                 while (true)
                 {
-                    if (int.TryParse(Console.ReadLine(), out fireStartingY) && fireStartingY >= 0 && fireStartingY <= height - 1)
+                    if (int.TryParse(Console.ReadLine(), out fireStartingY) && fireStartingY >= 0 && fireStartingY <= grid[].getlength(1) - 1)
                     {
                         break;
                     }
@@ -67,10 +68,12 @@ namespace ForestFire
             }
             Console.WriteLine("Thank you, we are loading your forest grid now. Press enter to display the grid");
             Console.ReadLine();
-            DrawGrid(grid, width, height);
+            DrawGrid(grid);
+            Console.WriteLine("The fire spread simulation has now started. Press enter to see the next time step.");
+            AdvanceFire(grid);
         }
 
-        static (int width, int height, Cell[,] grid) ReadFile(bool isDefault)
+        static Cell[,] ReadFile(bool isDefault)
         {
             int width, height;
             string path;
@@ -128,7 +131,7 @@ namespace ForestFire
                             }
                             y--;
                         }
-                        return (width, height, grid);
+                        return grid;
                     }
                 }
                 catch (Exception e)
@@ -139,8 +142,10 @@ namespace ForestFire
             }
         }
 
-        static void DrawGrid(Cell[,] grid, int width, int height)
+        static void DrawGrid(Cell[,] grid)
         {
+            int width = grid[].getlength(0);
+            int height = grid[].getlength(1);
             string line = "+" + new string('-', width * 3) + "+";
             Console.WriteLine(line);
             for (int y = height - 1; y >= 0; y--)
@@ -171,6 +176,36 @@ namespace ForestFire
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        static bool AdvanceFire(Cell[,] grid)
+        {
+            bool fireAdvanced = false;
+            for (int x = 0; x < grid.GetLength(0); x++)
+            {
+                for (int y = 0; y < grid.GetLength(1); y++)
+                {
+                    if (grid[x,y] == Cell.Fire)
+                    {
+                        if (grid[x - 1, y] == Cell.Tree)
+                        {
+                            grid[x - 1, y] = Cell.NewFire;
+                        }
+                    }
+                }
+            }
+            for (int x = 0; x < grid.GetLength(0); x++)
+            {
+                for (int y = 0; y < grid.GetLength(1); y++)
+                {
+                    if (grid[x, y] == Cell.NewFire)
+                    {
+                        grid[x, y] = Cell.Fire;
+                        fireAdvanced = true;
+                    }
+                }
+            }
+            return fireAdvanced;
         }
     }
 }
