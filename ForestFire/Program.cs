@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,7 +51,6 @@ namespace ForestFire
                         int y = height - 1;
                         while ((line = sr.ReadLine()) != null)
                         {
-                            y--;
                             string[] splat = line.Split(' ');
                             if (splat.Length == width)
                             {
@@ -65,10 +65,16 @@ namespace ForestFire
                                             grid[x, y] = Cell.Tree;
                                             break;
                                         default:
+                                            Console.WriteLine("Splat error");
                                             throw new ArgumentOutOfRangeException();
                                     }
                                 }
                             }
+                            else
+                            {
+                                throw new FormatException();
+                            }
+                            y--;
                         }
                         return (width, height, grid);
                     }
