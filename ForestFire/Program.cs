@@ -44,7 +44,7 @@ namespace ForestFire
                 Console.Write("Please enter the x co-ordinate of the fire: ");
                 while (true)
                 {
-                    if (int.TryParse(Console.ReadLine(), out fireStartingX) && fireStartingX >= 0 && fireStartingX <= grid[].getlength(0) - 1)
+                    if (int.TryParse(Console.ReadLine(), out fireStartingX) && fireStartingX >= 0 && fireStartingX <= grid.GetLength(0) - 1)
                     {
                         break;
                     }
@@ -53,7 +53,7 @@ namespace ForestFire
                 Console.Write("Please enter the y co-ordinate of the fire: ");
                 while (true)
                 {
-                    if (int.TryParse(Console.ReadLine(), out fireStartingY) && fireStartingY >= 0 && fireStartingY <= grid[].getlength(1) - 1)
+                    if (int.TryParse(Console.ReadLine(), out fireStartingY) && fireStartingY >= 0 && fireStartingY <= grid.GetLength(1) - 1)
                     {
                         break;
                     }
@@ -70,7 +70,13 @@ namespace ForestFire
             Console.ReadLine();
             DrawGrid(grid);
             Console.WriteLine("The fire spread simulation has now started. Press enter to see the next time step.");
-            AdvanceFire(grid);
+            Console.ReadLine();
+            while (AdvanceFire(grid))
+            {
+                Console.ReadLine();
+                DrawGrid(grid);
+            }
+            Console.WriteLine("The fire spread has reached its end. The fire cannot spread any further.");
         }
 
         static Cell[,] ReadFile(bool isDefault)
@@ -144,8 +150,8 @@ namespace ForestFire
 
         static void DrawGrid(Cell[,] grid)
         {
-            int width = grid[].getlength(0);
-            int height = grid[].getlength(1);
+            int width = grid.GetLength(0);
+            int height = grid.GetLength(1);
             string line = "+" + new string('-', width * 3) + "+";
             Console.WriteLine(line);
             for (int y = height - 1; y >= 0; y--)
@@ -181,16 +187,25 @@ namespace ForestFire
         static bool AdvanceFire(Cell[,] grid)
         {
             bool fireAdvanced = false;
-            for (int x = 0; x < grid.GetLength(0); x++)
+            int width = grid.GetLength(0);
+            int height = grid.GetLength(1);
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < grid.GetLength(1); y++)
+                for (int y = 0; y < height; y++)
                 {
                     if (grid[x,y] == Cell.Fire)
                     {
-                        if (grid[x - 1, y] == Cell.Tree)
-                        {
+                        if (x > 0 && grid[x - 1, y] == Cell.Tree)
                             grid[x - 1, y] = Cell.NewFire;
-                        }
+
+                        if (x < width - 1 && grid[x + 1, y] == Cell.Tree)
+                            grid[x + 1, y] = Cell.NewFire;
+
+                        if (y > 0 && grid[x, y - 1] == Cell.Tree)
+                            grid[x, y - 1] = Cell.NewFire;
+
+                        if (y < height - 1 && grid[x, y + 1] == Cell.Tree)
+                            grid[x, y + 1] = Cell.NewFire;
                     }
                 }
             }
